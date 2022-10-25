@@ -1,7 +1,8 @@
 package net.chexmix.mod;
 
-import net.fabricmc.fabric.api.loot.v1.FabricLootPoolBuilder;
-import net.fabricmc.fabric.api.loot.v1.event.LootTableLoadingCallback;
+import net.fabricmc.fabric.api.loot.v2.FabricLootPoolBuilder;
+import net.fabricmc.fabric.api.loot.v2.LootTableEvents;
+import net.minecraft.loot.LootPool;
 import net.minecraft.loot.condition.RandomChanceLootCondition;
 import net.minecraft.loot.entry.ItemEntry;
 import net.minecraft.loot.function.SetCountLootFunction;
@@ -49,7 +50,9 @@ public class LootTableInit {
             = new Identifier("minecraft", "entities/villager");
 
     public static void modifyLootTables() {
-        LootTableLoadingCallback.EVENT.register(((resourceManager, manager, id, supplier, setter) -> {
+
+        LootTableEvents.MODIFY.register(((resourceManager, lootManager, id, tableBuilder, source) ->
+        {
 
             if(VILLAGE_PLAINS_HOUSE.equals(id) ||
                     VILLAGE_DESERT_HOUSE.equals(id) ||
@@ -57,41 +60,43 @@ public class LootTableInit {
                     VILLAGE_SNOWY_HOUSE.equals(id) ||
                     VILLAGE_TEMPLE.equals(id) ||
                     VILLAGE_TAIGA_HOUSE.equals(id)) {
-                FabricLootPoolBuilder poolBuilder = FabricLootPoolBuilder.builder()
+                LootPool.Builder poolBuilder = LootPool.builder()
                         .rolls(ConstantLootNumberProvider.create(1))
                         .conditionally(RandomChanceLootCondition.builder(0.01f)) // Drops 1% of the time
                         .with(ItemEntry.builder(ItemInit.CHEXMIX))
-                        .withFunction(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 1.0f)).build());
-                supplier.withPool(poolBuilder.build());
+                        .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 1.0f)).build());
+                tableBuilder.pool(poolBuilder.build());
             }
             else if(ABANDONED_MINESHAFT.equals(id) ||
                     PILLAGER_OUTPOST.equals(id) ||
                     DESERT_PYRAMID.equals(id) ||
                     SHIPWRECK_SUPPLY.equals(id)){
-                FabricLootPoolBuilder poolBuilder = FabricLootPoolBuilder.builder()
+                LootPool.Builder poolBuilder = LootPool.builder()
                         .rolls(ConstantLootNumberProvider.create(1))
                         .conditionally(RandomChanceLootCondition.builder(0.1f)) // Drops 10% of the time
                         .with(ItemEntry.builder(ItemInit.CHEXMIX))
-                        .withFunction(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 1.0f)).build());
-                supplier.withPool(poolBuilder.build());
+                        .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 1.0f)).build());
+                tableBuilder.pool(poolBuilder.build());
             }
             else if(WOODLAND_MANSION.equals(id) ||
                     STRONGHOLD_CORRIDOR.equals(id) ){
-                FabricLootPoolBuilder poolBuilder = FabricLootPoolBuilder.builder()
+                LootPool.Builder poolBuilder = LootPool.builder()
                         .rolls(ConstantLootNumberProvider.create(1))
                         .conditionally(RandomChanceLootCondition.builder(0.3f)) // Drops 30% of the time
                         .with(ItemEntry.builder(ItemInit.CHEXMIX))
-                        .withFunction(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 1.0f)).build());
-                supplier.withPool(poolBuilder.build());
+                        .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 1.0f)).build());
+                tableBuilder.pool(poolBuilder.build());
             }
             else if(VILLAGER.equals(id)){
-                FabricLootPoolBuilder poolBuilder = FabricLootPoolBuilder.builder()
+                LootPool.Builder poolBuilder = LootPool.builder()
                         .rolls(ConstantLootNumberProvider.create(1))
-                        .conditionally(RandomChanceLootCondition.builder(0.01f)) // Drops 30% of the time
+                        .conditionally(RandomChanceLootCondition.builder(0.01f)) // Drops 1% of the time
                         .with(ItemEntry.builder(ItemInit.CHEXMIX))
-                        .withFunction(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 1.0f)).build());
-                supplier.withPool(poolBuilder.build());
+                        .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 1.0f)).build());
+                tableBuilder.pool(poolBuilder.build());
             }
+
+
         }));
     }
 }
