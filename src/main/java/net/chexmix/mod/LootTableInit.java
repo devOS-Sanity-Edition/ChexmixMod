@@ -39,11 +39,15 @@ public class LootTableInit {
     private static final Identifier SHIPWRECK_SUPPLY
             = new Identifier("minecraft", "chests/shipwreck_supply");
 
-    //best chances
+    //better chances
     private static final Identifier WOODLAND_MANSION
             = new Identifier("minecraft", "chests/woodland_mansion");
     private static final Identifier STRONGHOLD_CORRIDOR
             = new Identifier("minecraft", "chests/stronghold_corridor");
+
+    //best chance
+    private static final Identifier ANCIENT_CITY_ICE_BOX
+            = new Identifier("minecraft", "chests/ancient_city_ice_box");
 
     //mobs
     private static final Identifier VILLAGER
@@ -73,13 +77,21 @@ public class LootTableInit {
                     SHIPWRECK_SUPPLY.equals(id)){
                 LootPool.Builder poolBuilder = LootPool.builder()
                         .rolls(ConstantLootNumberProvider.create(1))
-                        .conditionally(RandomChanceLootCondition.builder(0.1f)) // Drops 10% of the time
+                        .conditionally(RandomChanceLootCondition.builder(0.05f)) // Drops 5% of the time
                         .with(ItemEntry.builder(ItemInit.CHEXMIX))
                         .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 1.0f)).build());
                 tableBuilder.pool(poolBuilder.build());
             }
             else if(WOODLAND_MANSION.equals(id) ||
-                    STRONGHOLD_CORRIDOR.equals(id) ){
+                    STRONGHOLD_CORRIDOR.equals(id)){
+                LootPool.Builder poolBuilder = LootPool.builder()
+                        .rolls(ConstantLootNumberProvider.create(1))
+                        .conditionally(RandomChanceLootCondition.builder(0.2f)) // Drops 20% of the time
+                        .with(ItemEntry.builder(ItemInit.CHEXMIX))
+                        .apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 1.0f)).build());
+                tableBuilder.pool(poolBuilder.build());
+            }
+            else if(ANCIENT_CITY_ICE_BOX.equals(id)){
                 LootPool.Builder poolBuilder = LootPool.builder()
                         .rolls(ConstantLootNumberProvider.create(1))
                         .conditionally(RandomChanceLootCondition.builder(0.3f)) // Drops 30% of the time

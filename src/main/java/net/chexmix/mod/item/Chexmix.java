@@ -2,7 +2,9 @@ package net.chexmix.mod.item;
 
 import net.chexmix.mod.ChexmixMod;
 import net.chexmix.mod.ItemInit;
+import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.FoodComponent;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
@@ -17,7 +19,9 @@ import java.util.Random;
 
 public class Chexmix extends Item {
     public Chexmix() {
-        super(new Item.Settings().group(ItemGroup.FOOD));
+        //super(new Item.Settings().group(ItemGroup.FOOD));
+
+        super(new FabricItemSettings().maxCount(1));
     }
 
     @Override
