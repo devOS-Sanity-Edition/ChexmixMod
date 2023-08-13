@@ -17,7 +17,7 @@ import java.util.Random;
 
 public class Chexmix extends Item {
     public Chexmix() {
-        super(new Item.Settings().group(ItemGroup.FOOD));
+        super(new Item.Settings().group(ItemGroup.FOOD).maxDamage(256));
     }
 
     @Override
@@ -33,6 +33,10 @@ public class Chexmix extends Item {
             user.getInventory().insertStack(new ItemStack(items[rand.nextInt(6)]));
 
             user.getItemCooldownManager().set(this, 20);
+
+            itemStack.damage(1, user, (p) -> {
+                p.sendToolBreakStatus(user.getActiveHand());
+            });
 
             return new TypedActionResult<ItemStack>(ActionResult.SUCCESS, itemStack);
         }
