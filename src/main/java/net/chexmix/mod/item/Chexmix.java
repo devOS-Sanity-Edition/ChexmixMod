@@ -4,9 +4,7 @@ import net.chexmix.mod.ChexmixMod;
 import net.chexmix.mod.ItemInit;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.FoodComponent;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
@@ -21,7 +19,7 @@ public class Chexmix extends Item {
     public Chexmix() {
         //super(new Item.Settings().group(ItemGroup.FOOD));
 
-        super(new FabricItemSettings().maxCount(1));
+        super(new FabricItemSettings().maxCount(1).maxDamage(256));
     }
 
     @Override
@@ -37,6 +35,10 @@ public class Chexmix extends Item {
             user.getInventory().insertStack(new ItemStack(items[rand.nextInt(6)]));
 
             user.getItemCooldownManager().set(this, 20);
+
+            itemStack.damage(1, user, (p) -> {
+                p.sendToolBreakStatus(user.getActiveHand());
+            });
 
             return new TypedActionResult<ItemStack>(ActionResult.SUCCESS, itemStack);
         }
