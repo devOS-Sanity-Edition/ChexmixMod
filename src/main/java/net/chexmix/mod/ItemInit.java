@@ -31,17 +31,6 @@ public class ItemInit {
 
         RegisterFood("chexmix", CHEXMIX);
 
-        /**
-        Registry.register(Registries.ITEM, new Identifier(MODID, "circle_pretzel"), CIRCLE_PRETZEL);
-        Registry.register(Registries.ITEM, new Identifier(MODID, "corn_chex"), CORN_CHEX);
-        Registry.register(Registries.ITEM, new Identifier(MODID, "breadstick"), BREADSTICK);
-        Registry.register(Registries.ITEM, new Identifier(MODID, "rye_cracker"), RYE_CRACKER);
-        Registry.register(Registries.ITEM, new Identifier(MODID, "square_pretzel"), SQUARE_PRETZEL);
-        Registry.register(Registries.ITEM, new Identifier(MODID, "wheat_chex"), WHEAT_CHEX);
-
-        Registry.register(Registries.ITEM, new Identifier(MODID, "chexmix"), CHEXMIX);
-        **/
-
     }
 
     private static void RegisterFood(String path, Item item){
